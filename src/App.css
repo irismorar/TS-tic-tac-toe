@@ -1,3 +1,33 @@
 * {
   box-sizing: border-box;
 }
+
+body {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  background-color: hsla(256, 89%, 71%, 0.5);
+}
+
+.game-container {
+  width: 50rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 4rem;
+}
+
+.board-container {
+  width: 24rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+
+.board-cell {
+  width: 8rem;
+  height: 8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid hsla(256, 91%, 82%, 0.9);
+  color: hsla(284, 78%, 61%, 1);
+}
