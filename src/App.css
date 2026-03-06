@@ -1,33 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Gemstones&display=swap');
+
 * {
   box-sizing: border-box;
 }
 
 body {
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: "Rubik Gemstones", system-ui;
+  font-weight: 400;
+  font-style: normal;
   background-color: hsla(256, 89%, 71%, 0.5);
+  margin: 0;
+  min-height: 100vh;
+}
+
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 1rem;
+  gap: 5rem;
+}
+
+main > div {
+  text-align: center;
+  flex: 1;
+}
+
+main > div:first-child {
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+}
+
+main > div:first-child > div {
+  width: 300px;
+  position: absolute;
+  bottom: 0;
+  transform: translateX(-50%);
 }
 
 .game-container {
-  width: 50rem;
+  height: 300px;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  font-size: 4rem;
+  justify-content: center;
+  font-size: clamp(5rem, 8vw, 6rem);
+  gap: 10rem;
 }
 
 .board-container {
-  width: 24rem;
+  height: 300px;
+  aspect-ratio: 1 / 1;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0;
 }
 
 .board-cell {
-  width: 8rem;
-  height: 8rem;
+  aspect-ratio: 1 / 1;
+  width: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid hsla(256, 91%, 82%, 0.9);
-  color: hsla(284, 78%, 61%, 1);
+}
+
+button {
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  background-color: transparent;
+  border: none;
+  color: hsla(256, 91%, 82%, 0.9);
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(.95);
+}
+
+button:hover {
+  text-decoration: underline;
 }

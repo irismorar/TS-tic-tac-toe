@@ -26,18 +26,20 @@ export function useGameState() {
     null,
   ]);
 
-  const handleMoves = useCallback((player: "P1" | "P2", indexCell: number) => {
-    setMoves((prevMoves: BoardState) => {
-      if (prevMoves[indexCell] !== null) {
-        return prevMoves;
+  const addMove = useCallback((cellIndex: number) => {
+    setMoves((prev) => {
+      if (prev[cellIndex] !== null) {
+        return prev;
       }
-      const playersMoves = [...prevMoves];
-      playersMoves[indexCell] = player === "P1" ? "X" : "O";
-      return playersMoves;
+      const completedMoves = prev.filter((move) => move !== null);
+      const currentPlayer = completedMoves.length % 2 === 0 ? "P1" : "P2";
+      const currentMoves = [...prev];
+      currentMoves[cellIndex] = currentPlayer === "P1" ? "X" : "O";
+      return currentMoves;
     });
   }, []);
 
-  const getPlayer1Moves = () => {
+  const getPlayer1MovesIndices = () => {
     const player1MoveIndices: number[] = [];
     for (let i = 0; i < 9; i++) {
       if (moves[i] === "X") {
@@ -47,7 +49,7 @@ export function useGameState() {
     return player1MoveIndices;
   };
 
-  const getPlayer2Moves = () => {
+  const getPlayer2MovesIndices = () => {
     const player2MoveIndices: number[] = [];
     for (let i = 0; i < 9; i++) {
       if (moves[i] === "O") {
@@ -71,7 +73,9 @@ export function useGameState() {
 
   const hasPlayer1Won = () => {
     for (const winningCombination of WINNING_COMBINATIONS) {
-      if (movesIncludeCombination(getPlayer1Moves(), winningCombination)) {
+      if (
+        movesIncludeCombination(getPlayer1MovesIndices(), winningCombination)
+      ) {
         return true;
       }
     }
@@ -80,7 +84,9 @@ export function useGameState() {
 
   const hasPlayer2Won = () => {
     for (const winningCombination of WINNING_COMBINATIONS) {
-      if (movesIncludeCombination(getPlayer2Moves(), winningCombination)) {
+      if (
+        movesIncludeCombination(getPlayer2MovesIndices(), winningCombination)
+      ) {
         return true;
       }
     }
@@ -90,12 +96,13 @@ export function useGameState() {
   const getWinningCombination = () => {
     for (const winningCombination of WINNING_COMBINATIONS) {
       if (
-        movesIncludeCombination(getPlayer1Moves(), winningCombination) ||
-        movesIncludeCombination(getPlayer2Moves(), winningCombination)
+        movesIncludeCombination(getPlayer1MovesIndices(), winningCombination) ||
+        movesIncludeCombination(getPlayer2MovesIndices(), winningCombination)
       ) {
         return winningCombination;
       }
     }
+    return null;
   };
 
   const hasGameBeenWon = () => {
@@ -110,14 +117,18 @@ export function useGameState() {
     return hasGameBeenWon() || isDraw();
   };
 
+  const reset = () => {
+    setMoves([null, null, null, null, null, null, null, null, null]);
+  };
+
   return {
     moves,
-    handleMoves,
+    addMove,
     hasPlayer1Won,
     hasPlayer2Won,
     getWinningCombination,
-    hasGameBeenWon,
     isDraw,
     isGameOver,
+    reset,
   };
 }

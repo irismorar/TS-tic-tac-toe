@@ -4,31 +4,35 @@ import { useGameState } from "./useGameState";
 export default function App() {
   const {
     moves,
-    handleMoves,
+    addMove,
     hasPlayer1Won,
     hasPlayer2Won,
     getWinningCombination,
-    hasGameBeenWon,
     isDraw,
     isGameOver,
+    reset,
   } = useGameState();
 
   return (
     <main>
       <div>
-        {" "}
-        {isGameOver() && "GAME OVER!"} <br />
-        {hasPlayer1Won() && "Player 1 wins!"}
-        {hasPlayer2Won() && "Player 2 wins!"}
-        {isDraw() && "DRAW!"}
+        <div>
+          {" "}
+          {isGameOver() && "GAME OVER"} <br />
+          {hasPlayer1Won() && "Player 1 wins!"}
+          {hasPlayer2Won() && "Player 2 wins!"}
+          {isDraw() && "DRAW!"}
+        </div>
       </div>
       <section className="game-container">
         <div
           className="player_name"
           style={{
             color:
-              (moves.length % 2 === 0 && !hasGameBeenWon()) || hasPlayer1Won()
-                ? "rgb(82, 146, 235)"
+              (moves.filter((move) => move !== null).length % 2 === 0 &&
+                !isGameOver()) ||
+              hasPlayer1Won()
+                ? "hsla(198, 96%, 50%, 1)"
                 : "hsla(0, 0%, 100%, .1)",
           }}
         >
@@ -40,12 +44,20 @@ export default function App() {
               <div
                 key={index}
                 className="board-cell"
-                onClick={() =>
-                  handleMoves(
-                    moves.indexOf(move) % 2 === 0 ? "P1" : "P2",
-                    index,
-                  )
-                }
+                onClick={() => {
+                  if (hasPlayer1Won() || hasPlayer2Won()) {
+                    return;
+                  }
+                  addMove(index);
+                }}
+                style={{
+                  backgroundColor: getWinningCombination()?.includes(index)
+                    ? "hsla(136, 89%, 71%, .9)"
+                    : "transparent",
+                  color: getWinningCombination()?.includes(index)
+                    ? "hsla(256, 75%, 45%, 1)"
+                    : "hsla(284, 78%, 61%, 1)",
+                }}
               >
                 {move}
               </div>
@@ -56,7 +68,9 @@ export default function App() {
           className="player_name"
           style={{
             color:
-              (moves.length % 2 !== 0 && !hasGameBeenWon()) || hasPlayer2Won()
+              (moves.filter((move) => move !== null).length % 2 !== 0 &&
+                !isGameOver()) ||
+              hasPlayer2Won()
                 ? "hsla(46, 91%, 56%, 1)"
                 : "hsla(0, 0%, 100%, .1)",
           }}
@@ -64,6 +78,9 @@ export default function App() {
           P2
         </div>
       </section>
+      <div>
+        <button onClick={reset}>RESET</button>
+      </div>
     </main>
   );
 }
