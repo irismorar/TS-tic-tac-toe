@@ -9,6 +9,7 @@ export default function App() {
     hasPlayer2Won,
     getWinningCombination,
     isDraw,
+    isPlayer1CurrentPlayer,
     isGameOver,
     reset,
   } = useGameState();
@@ -29,9 +30,7 @@ export default function App() {
           className="player_name"
           style={{
             color:
-              (moves.filter((move) => move !== null).length % 2 === 0 &&
-                !isGameOver()) ||
-              hasPlayer1Won()
+              (isPlayer1CurrentPlayer() && !isGameOver()) || hasPlayer1Won()
                 ? "hsla(198, 96%, 50%, 1)"
                 : "hsla(0, 0%, 100%, .1)",
           }}
@@ -45,9 +44,6 @@ export default function App() {
                 key={index}
                 className="board-cell"
                 onClick={() => {
-                  if (hasPlayer1Won() || hasPlayer2Won()) {
-                    return;
-                  }
                   addMove(index);
                 }}
                 style={{
@@ -68,9 +64,7 @@ export default function App() {
           className="player_name"
           style={{
             color:
-              (moves.filter((move) => move !== null).length % 2 !== 0 &&
-                !isGameOver()) ||
-              hasPlayer2Won()
+              (!isPlayer1CurrentPlayer() && !isGameOver()) || hasPlayer2Won()
                 ? "hsla(46, 91%, 56%, 1)"
                 : "hsla(0, 0%, 100%, .1)",
           }}
