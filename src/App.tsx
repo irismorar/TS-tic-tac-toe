@@ -25,9 +25,9 @@ export default function App() {
           {isDraw() && "DRAW!"}
         </div>
       </div>
+
       <section className="game-container">
         <div
-          className="player_name"
           style={{
             color:
               (isPlayer1CurrentPlayer() && !isGameOver()) || hasPlayer1Won()
@@ -61,7 +61,6 @@ export default function App() {
           })}
         </section>
         <div
-          className="player_name"
           style={{
             color:
               (!isPlayer1CurrentPlayer() && !isGameOver()) || hasPlayer2Won()
@@ -72,6 +71,7 @@ export default function App() {
           P2
         </div>
       </section>
+
       <div>
         <button onClick={reset}>RESET</button>
       </div>
