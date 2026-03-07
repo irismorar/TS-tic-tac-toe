@@ -29,7 +29,7 @@
   --cell-size-relative-value: calc(
     (var(--smaller-side) - var(--smaller-clearance-by-aspect-ratio) * 2) / 3
   );
-  --cell-size-absolute-value: 100px;
+  --cell-size-absolute-value: 160px;
   --cell-size: min(
     var(--cell-size-relative-value),
     var(--cell-size-absolute-value)
@@ -105,13 +105,31 @@ main > div:last-child {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid hsla(256, 91%, 82%, 0.9);
   font-size: calc(var(--cell-size) * 0.5);
+}
+
+.board-cell {
+  border-color: hsla(256, 91%, 82%, 0.9);
+  border-style: solid;
+  border-top-width: 1px;
+  border-right-width: 0;
+  border-bottom-width: 0;
+  border-left-width: 1px;
+}
+
+.board-cell:nth-child(3n) {
+  border-right-width: 1px;
+}
+
+.board-cell:nth-child(7),
+.board-cell:nth-child(8),
+.board-cell:nth-child(9) {
+  border-bottom-width: 1px;
 }
 
 button {
   position: relative;
-  font-size: calc(var(--smaller-clearance-by-aspect-ratio) * 0.15);
+  font-size: calc(var(--smaller-clearance-by-aspect-ratio) * 0.2);
   line-height: 1em;
   padding: 0.6em 1em 0.5em 1em;
   color: hsla(256, 91%, 82%, 0.9);
